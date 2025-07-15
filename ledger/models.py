@@ -1,4 +1,5 @@
 from django.db import models
+import random
 
 class BalanceArticle(models.Model):
     name = models.CharField(max_length=255)
@@ -25,6 +26,15 @@ class Account(models.Model):
     type = models.CharField(max_length=20, choices=ACCOUNT_TYPE_CHOICES)
     balance = models.DecimalField(max_digits=14, decimal_places=2, default=0)
     group = models.ForeignKey(BalanceGroup, on_delete=models.CASCADE, related_name='accounts')
+
+    def save(self, *args, **kwargs):
+        if not self.number:
+            while True:
+                num = ''.join(str(random.randint(0, 9)) for _ in range(10))
+                if not Account.objects.filter(number=num).exists():
+                    self.number = num
+                    break
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
