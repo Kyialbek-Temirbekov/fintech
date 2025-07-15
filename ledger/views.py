@@ -1,8 +1,8 @@
 from django.views.generic import View,ListView
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 
 from ledger.forms import TransactionForm
-from ledger.services import create_transaction
+from ledger.services import create_transaction, delete_transaction
 from ledger.models import Account, Transaction
 
 
@@ -31,3 +31,13 @@ class TransactionListView(ListView):
     model = Transaction
     template_name = 'ledger/transaction_list.html'
     context_object_name = 'transactions'
+
+    def get_queryset(self):
+        return Transaction.objects.filter(is_deleted=False)
+
+    def post(self, request):
+        transaction_id = request.POST.get('transaction_id')
+        if transaction_id:
+            delete_transaction(transaction_id)
+        return redirect('transaction_list')
+

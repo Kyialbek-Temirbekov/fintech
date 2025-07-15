@@ -16,32 +16,28 @@
         th {
             background-color: #eee;
         }
-        a {
-            text-decoration: none;
-            color: #007bff;
+        form {
+            display: inline;
         }
-        a:hover {
-            text-decoration: underline;
+        button {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #c82333;
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account_list' %}">Accounts</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'create_transaction' %}">Create Transaction</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'transaction_list' %}">Transaction History</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <nav>
+        <ul>
+            <li><a href="{% url 'account_list' %}">Accounts</a></li>
+            <li><a href="{% url 'create_transaction' %}">Create Transaction</a></li>
+            <li><a href="{% url 'transaction_list' %}">Transaction History</a></li>
+        </ul>
     </nav>
 
     <h1>Transaction History</h1>
@@ -54,6 +50,7 @@
                 <th>Description</th>
                 <th>Debit Account</th>
                 <th>Credit Account</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -64,14 +61,20 @@
                 <td>{{ transaction.description|default:"-" }}</td>
                 <td>{{ transaction.debit_account.name }} ({{ transaction.debit_account.number }})</td>
                 <td>{{ transaction.credit_account.name }} ({{ transaction.credit_account.number }})</td>
+                <td>
+                    <form method="post" action="{% url 'transaction_list' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="transaction_id" value="{{ transaction.id }}">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="5" style="text-align: center;">No transactions found.</td>
+                <td colspan="6" style="text-align: center;">No transactions found.</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-
 </body>
 </html>
