@@ -17,10 +17,11 @@ docker compose build
 ```bash
 docker compose up -d
 ```
-### Загрузите тестовые данные (фикстуры):
+### Загрузите тестовые данные (фикстуры)
 ```bash
 docker compose exec web python manage.py loaddata test_data.json
 ```
+### Перейдите по ссылке http://127.0.0.1:8000/accounts
 ### При необходимости остановите и удалите все контейнеры и тома базы данных
 ```bash
 docker compose down -v
