@@ -17,10 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from ledger.views import AccountListView, CreateTransactionView
+from ledger.views import AccountListView, CreateTransactionView, TransactionListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', AccountListView.as_view(), name='account_list'),
     path('transaction/', CreateTransactionView.as_view(), name='create_transaction'),
+    path('transaction/history/', TransactionListView.as_view(), name='transaction_list'),
 ]

@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 from ledger.forms import TransactionForm
 from ledger.services import create_transaction
-from ledger.models import Account
+from ledger.models import Account, Transaction
 
 
 class AccountListView(ListView):
@@ -26,3 +26,8 @@ class CreateTransactionView(View):
             message = form.errors
         accounts = Account.objects.all()
         return render(request, self.template_name, {'accounts': accounts, 'message': message})
+
+class TransactionListView(ListView):
+    model = Transaction
+    template_name = 'ledger/transaction_list.html'
+    context_object_name = 'transactions'
