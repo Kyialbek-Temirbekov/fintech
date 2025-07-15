@@ -4,6 +4,22 @@
     <title>Account List</title>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_list' %}">Accounts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'create_transaction' %}">Create Transaction</a>
+                    </li>
+                    <!-- Add more links here if needed -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <h1>Accounts</h1>
     <table border="1" cellpadding="5" cellspacing="0">
         <thead>

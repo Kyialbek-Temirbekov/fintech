@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Transaction</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_list' %}">Accounts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'create_transaction' %}">Create Transaction</a>
+                    </li>
+                    <!-- Add more links here if needed -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <h1>Create Transaction</h1>
+
+    {% if message %}
+        <div style="margin-bottom: 1rem; color: {% if form.errors %}red{% else %}green{% endif %};">
+            {{ message }}
+        </div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <label for="debit_id">Debit Account:</label><br>
+        <select name="debit_id" required>
+            <option value="" disabled selected>Choose account</option>
+            {% for account in accounts %}
+                <option value="{{ account.id }}">{{ account.name }} ({{ account.number }})</option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <label for="credit_id">Credit Account:</label><br>
+        <select name="credit_id" required>
+            <option value="" disabled selected>Choose account</option>
+            {% for account in accounts %}
+                <option value="{{ account.id }}">{{ account.name }} ({{ account.number }})</option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <label for="amount">Amount:</label><br>
+        <input type="number" step="0.01" name="amount" required>
+        <br><br>
+
+        <label for="desc">Description:</label><br>
+        <input type="text" name="desc">
+        <br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+</html>
