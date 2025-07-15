@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+      - db-data:/data
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_ENGINE=django.db.backends.sqlite3
+      - DB_NAME=/data/db.sqlite3
+
+volumes:
+  db-data:
