@@ -1,3 +1,7 @@
 from django.contrib import admin
+from ledger.models import *
 
-# Register your models here.
+admin.site.register(BalanceArticle)
+admin.site.register(BalanceGroup)
+admin.site.register(Account)
+admin.site.register(Transaction)
